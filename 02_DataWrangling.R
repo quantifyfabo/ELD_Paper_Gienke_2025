@@ -21,7 +21,7 @@ library(ggalluvial)
 
 
 # Load final version of merged LEA and LIE Data
-leaderlist <- read.csv('/Users/fabiangi/Documents/Goethe Uni/Semester 2/VP Regierungschefs/Term Paper/Datasets/LIE_LAE_Merging/leaderlist_v3.csv', sep=";")
+leaderlist <- read.csv('.../leaderlist_v3.csv', sep=";")
 
 # Remove unwanted white spaces
 leaderlist <- leaderlist %>%
@@ -32,7 +32,7 @@ leaderlist <- leaderlist %>%
   mutate(Destination3 = str_trim(Destination3, side = "both"))
 
 # Load WRD Data
-WRD_Raw <- read.csv2('/Users/fabiangi/Documents/Goethe Uni/Semester 2/VP Regierungschefs/Term Paper/Datasets/Religious Composition 2010-2020 dataset/WRD_Raw.csv', fileEncoding = "UTF-8")
+WRD_Raw <- read.csv2('.../WRD_Raw.csv', fileEncoding = "UTF-8")
 
 # WRD - Religion (only year 2010)
 WRD_Raw <- WRD_Raw %>% 
@@ -121,7 +121,7 @@ leaderlist <- leaderlist %>%
 
 
 # Load Language Data
-global_languages <- read_excel('/Users/fabiangi/Documents/Goethe Uni/Semester 2/VP Regierungschefs/Term Paper/Datasets/Languages/countries-languages.xlsx', skip = 1)
+global_languages <- read_excel('.../countries-languages.xlsx', skip = 1)
 
 # Language - Merge Langauge with ELD Data (based on Origin Country)
 leaderlist <- leaderlist %>%
@@ -145,7 +145,7 @@ leaderlist <- leaderlist %>%
 
 # Load Polity V Data
 PolityV <- read_excel(
-  '/Users/fabiangi/Documents/Goethe Uni/Semester 2/VP Regierungschefs/Term Paper/Compare/Data_Overview.xlsx',
+  '/.../Compare/Data_Overview.xlsx',
   sheet = "PolV"
 ) %>%
   mutate(
@@ -179,5 +179,5 @@ leaderlist_merged <- leaderlist %>%
 
 
 # - Final ELD Dataset
-write.csv(leaderlist_merged,'/Users/fabiangi/Documents/Goethe Uni/Semester 2/VP Regierungschefs/Term Paper/Datasets/Exiled_Leader_List_Final_v3.csv', na ="")
+write.csv(leaderlist_merged,'.../Exiled_Leader_List_Final_v3.csv', na ="")
 

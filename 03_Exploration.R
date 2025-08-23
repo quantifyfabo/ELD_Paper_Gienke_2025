@@ -233,3 +233,57 @@ chisq_language <- chisq.test(tab_language)
 chisq_language
 
 
+
+# Additional PolV Calculations
+# Calculate the mean Polity V score for origin and destination
+polv_avg <- ELD %>%
+  summarise(
+    avg_origin_PolV = mean(origin_PolV, na.rm = TRUE),
+    avg_destination_PolV = mean(d_final_PolV, na.rm = TRUE)
+  )
+print(polv_avg)
+
+
+# Average PolV Score for 1974
+# Define prefixes to exclude
+exclude_prefix <- c("Europe", "Asia", "Africa", "North America", 
+                    "South America", "Oceania", "World")
+# Filter out these entities
+PolityV_clean <- PolityV %>%
+  filter(!grepl(paste0("^(", paste(exclude_prefix, collapse="|"), ")"), Entity))
+#  calculate the average Democracy score for 1974
+avg_polity_1974 <- PolityV_clean %>%
+  filter(Year == 1974) %>%
+  summarise(avg_Democracy = mean(Democracy, na.rm = TRUE))
+
+print(avg_polity_1974)
+
+
+# Check if PolV Score Imporived, Unchanged or Worsened
+polv_change_summary <- ELD %>%
+  filter(!is.na(origin_PolV), !is.na(d_final_PolV)) %>%
+  mutate(delta = d_final_PolV - origin_PolV,
+         change = case_when(
+           delta > 0  ~ "Improved",
+           delta == 0 ~ "Unchanged",
+           delta < 0  ~ "Worsened"
+         )) %>%
+  count(change) %>%
+  mutate(share = round(100 * n / sum(n), 1))
+
+polv_change_summary
+
+
+# Check how much the PolV Score Changed (as Area over-under Figure 4)
+delta_summary <- ELD %>%
+  filter(!is.na(origin_PolV), !is.na(d_final_PolV)) %>%
+  mutate(delta = d_final_PolV - origin_PolV) %>%
+  summarise(
+    total_area = sum(abs(delta)),                   # Gesamtfläche
+    positive_area = sum(delta[delta > 0]),          # Fläche oberhalb 0
+    negative_area = abs(sum(delta[delta < 0])),     # Fläche unterhalb 0
+    positive_share = round(100 * positive_area / total_area, 1),
+    negative_share = round(100 * negative_area / total_area, 1)
+  )
+
+print(delta_summary)

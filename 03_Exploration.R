@@ -279,9 +279,9 @@ delta_summary <- ELD %>%
   filter(!is.na(origin_PolV), !is.na(d_final_PolV)) %>%
   mutate(delta = d_final_PolV - origin_PolV) %>%
   summarise(
-    total_area = sum(abs(delta)),                   # Gesamtfläche
-    positive_area = sum(delta[delta > 0]),          # Fläche oberhalb 0
-    negative_area = abs(sum(delta[delta < 0])),     # Fläche unterhalb 0
+    total_area = sum(abs(delta)),                
+    positive_area = sum(delta[delta > 0]),    
+    negative_area = abs(sum(delta[delta < 0])),     
     positive_share = round(100 * positive_area / total_area, 1),
     negative_share = round(100 * negative_area / total_area, 1)
   )

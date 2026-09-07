@@ -18,7 +18,7 @@ library(stringr)
 library(ggalluvial)
 
 # Load Final EDL dataset
-ELD <- read.csv('/Users/fabiangi/Documents/Goethe Uni/Semester 2/VP Regierungschefs/Term Paper/Datasets/Exiled_Leader_List_Final_v3.csv')
+ELD <- read.csv('/Exiled_Leader_List_Final_v3.csv')
 ELD <- ELD[, -c(1,2)] # remove first two columns
 
 
